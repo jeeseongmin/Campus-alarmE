@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="com.example.demo.board.mapper.BoardMapper">
+   
+   	<!-- Main -->
+    <select id="boardList" resultType="com.example.demo.board.domain.BoardVO">
+        SELECT
+            post_id, image_url, title, apply_start, apply_end, event_start, event_end
+        FROM post
+    </select>
+    
+    <select id="boardPost" parameterType="int" resultType="com.example.demo.board.domain.BoardVO">
+        SELECT
+            post_id, image_url, title, apply_start, apply_end, event_start, event_end
+        FROM post where post_id= #{post_id}
+    </select>
+    
+ 	<select id="tagCount" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM tag
+    </select>
+    
+    <!-- Tags -->
+    
+    <!-- 새로짬 -->
+    <select id="tagNameList" resultType="String">
+      SELECT tag_name
+      FROM tag AS t, (SELECT tag_id 
+         FROM user AS u, user_tag AS ut 
+          WHERE u.user_id = ut.user_id AND u.cookie='temp1' and ut.delete_flag != 0) AS m
+      WHERE t.tag_id = m.tag_id
+    </select>
+    
+    
+    <delete id="tagNameDelete" parameterType="String">
+        DELETE FROM tag WHERE tag_name = #{tag_name}
+    </delete>
+ 	
+ 
+</mapper>

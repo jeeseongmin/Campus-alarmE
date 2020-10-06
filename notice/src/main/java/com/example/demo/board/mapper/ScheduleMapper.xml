@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="com.example.demo.board.mapper.ScheduleMapper">
+    <select id="scheduleList_past" resultType="com.example.demo.board.domain.ScheduleVO">
+        SELECT
+            post_id, image_url, title, apply_start, apply_end, event_start, event_end
+        FROM post where DATE(event_end) >= DATE_SUB(NOW(),INTERVAL 3 YEAR) and date(now()) >= date(event_end) order by event_end DESC
+    </select>     
+    
+        <select id="scheduleList_current" resultType="com.example.demo.board.domain.ScheduleVO">
+        SELECT
+            post_id, image_url, title, apply_start, apply_end, event_start, event_end
+        FROM post order by if(DATE(apply_end) >= DATE(NOW()), apply_end, event_end) ASC
+    </select>     
+</mapper>
