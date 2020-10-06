@@ -33,7 +33,7 @@ public class BoardController {
     
     
 // --------------------------------schedule------------------------------
-	@RequestMapping("../schedule")
+	@RequestMapping("/schedule")
 	private String boardSchedule(Model model,
 			@RequestParam(value = "status", required=false, defaultValue = "current")String status) throws Exception {
         model.addAttribute("list", mScheduleService.scheduleService(status));
@@ -43,7 +43,7 @@ public class BoardController {
 
 // ---------------------------------detail--------------------------------
 	
-		@RequestMapping("../detail/{post_id}")
+		@RequestMapping("/detail/{post_id}")
 	private String boardDetail_before(Model model, @PathVariable int post_id) throws Exception {
 		System.out.println(post_id);
         model.addAttribute("list", mBoardService.postService(post_id));
